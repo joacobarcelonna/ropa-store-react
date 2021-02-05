@@ -5,12 +5,12 @@ import Footer from './../components/Footer'
 const MainLayouts = props => {
     return (
         <div>
-            <Header / >
+            <Header {...props} />
                 <div className='main'>
                     {props.children}
                 </div>
                 <Footer />
         </div>
-    )
-}
-export default MainLayouts;
+    );
+};
+export default MainLayouts ;
