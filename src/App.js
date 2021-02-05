@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import {Switch, Route} from 'react-router-dom'
-import {auth} from './firebase/utils'
+import {Switch, Route, Redirect} from 'react-router-dom'
+import {auth, handleUserProfile} from './firebase/utils'
 
 
 //layouts
@@ -32,16 +32,22 @@ class App extends Component {
 
 
    componentDidMount(){
-    this.authListener = auth.onAuthStateChanged(userAuth =>{
-      if (!userAuth) {
-        this.setState({
-          ...initialState
+    this.authListener = auth.onAuthStateChanged( async userAuth =>{
+      if (userAuth) {
+        const userRef = await handleUserProfile(userAuth);
+        userRef.onSnapshot(snapshot =>{
+          this.setState({
+            currentUser: {
+              id: snapshot.id,
+              ...snapshot.data()
+            }
+          })
         })
       }
-
       this.setState({
-        currentUser: userAuth
+        ...initialState
       })
+
     })
    }
 
@@ -50,11 +56,9 @@ class App extends Component {
    }
 
 
+  render() {
 
-
-  render(){
-
-    const {currentUser} = this.setState;
+    const { currentUser } = this.state;
 
     return (
       <div className="App">
@@ -65,16 +69,17 @@ class App extends Component {
   
           </HomepageLayout>
         )} /> 
-        <Route path= "/registrarse" render={()=>(
+        <Route path= "/registrarse" render={() => currentUser ? <Redirect to="/" />:(
           <MainLayouts currentUser = {currentUser} >
             <Registration />
           </MainLayouts >
         )} />
-          <Route path= "/login" render={()=>(
-          <MainLayouts currentUser = {currentUser}>
-            <Login />
-          </MainLayouts >
-        )} />
+          <Route path= "/login" 
+            render={() => currentUser ? <Redirect to="/" /> : (
+            <MainLayouts currentUser = {currentUser}>
+              <Login />
+            </MainLayouts >
+          )} />
         </Switch>
       </div>
     );

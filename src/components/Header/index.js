@@ -6,7 +6,7 @@ import { auth } from './../../firebase/utils'
 
 const Header = props => {
    
-    const { currentUser } =props;
+    const { currentUser } = props;
 
     return (
         <header className ="header">
@@ -22,7 +22,7 @@ const Header = props => {
                     {currentUser && (
                         <ul>
                             <li>
-                                <span>Cerrar Sesion</span>
+                                <span onClick={() => auth.signOut()}>Cerrar Sesion</span>
                             </li>
                         </ul>
                         
@@ -49,6 +49,6 @@ const Header = props => {
 };
 
 Header.defaultProps = {
-    currentUser: null,
-}
+    currentUser: null
+  };
 export default Header;
