@@ -1,46 +1,65 @@
-import React,{ useState } from 'react'
+import React,{ useState, useEffect } from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import './styles.scss'
+
+
 import FormInput from './../forms/Button/FormInput'
 import Button from './../forms/Button'
-import {auth, handleUserProfile} from './../../firebase/utils'
 import {withRouter} from 'react-router-dom'
 import AuthWrapper from './../AuthWrapper'
+import {signUpUser} from './../../redux/User/user.actions'
+
+
+
+const mapState = ({ user }) => ({
+    signInSuccess: user.signInSuccess,
+    signUpError: user.signUpError
+})
+
+
 
 const Signup = props => {
+    const { signInSuccess, signUpError } = useSelector(mapState)
+    const dispatch = useDispatch();
     const [displayName, setDisplayName] = useState('') 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('') 
-    const [errors, setErros] = useState('') 
+    const [errors, setErrors] = useState('') 
+   
+   useEffect(() => {
+        if(signInSuccess){
+            reset();
+            props.history.push('/')
+        }
+   },[signInSuccess])
+
+   useEffect(() => {
+        if(Array.isArray(signUpError) &&  signUpError.length > 0){
+            setErrors(signUpError);
+        }
+   },[signUpError])
+   
     const reset = () => {
         setDisplayName('')
         setEmail('')
         setPassword('')
         setConfirmPassword('')
-        setErros([])
+        setErrors([])
 
     }
 
-const handleFormSubmit = async event => {
+
+
+
+const handleFormSubmit = event => {
      event.preventDefault();
-     
-
-     if (password !== confirmPassword) {
-        const err = ['Contraseña no coincide'] 
-        setErros(err)
-        return;
-     }
-
-    try {
-        const {user } =  await auth.createUserWithEmailAndPassword (email, password);
-
-        await handleUserProfile(user,{displayName});
-        reset();
-        props.history.push('/')
-
-    }catch(err) {
-        // console.log(err);
-    }
+     dispatch(signUpUser({
+         displayName,
+         email,
+         password,
+         confirmPassword
+     }))
 
 
 }
@@ -112,3 +131,4 @@ const handleFormSubmit = async event => {
 
 
 export default withRouter(Signup);
+

@@ -1,14 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import './styles.scss'
-import Logo from './../../assets/logo2.png';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { auth } from './../../firebase/utils'
 
 
+import Logo from './../../assets/logo2.png';
 
-
-const mapState = ({ user }) =>({
+ const mapState = ({ user }) =>({
     currentUser : user.currentUser 
 })
 
@@ -67,3 +66,4 @@ Header.defaultProps = {
   };
 
 export default Header;
+
