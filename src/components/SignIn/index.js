@@ -1,14 +1,32 @@
-import React,{ useState } from 'react'
+import React,{ useState, useEffect } from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import './styles.scss'
 import Button from './../forms/Button'
-import {singinWithGoogle, auth} from './../../firebase/utils'
+import {singinWithGoogle} from './../../firebase/utils'
 import FormInput from './../forms/Button/FormInput'
 import {withRouter} from 'react-router-dom'
+import { signInUser } from './../../redux/User/user.actions'
+
+
+
+const mapState = ({ user }) => ({ 
+    signInSuccess: user.signInSuccess
+})
 
 
 const SignIn = props => {
+    const {signInSuccess} = useSelector(mapState)
+    const  dispatch = useDispatch();
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
+
+    useEffect(() => {
+        if (signInSuccess){
+            resetForm();
+            props.history.push('/');
+            }
+    },[signInSuccess])
+
     
     const resetForm = () => {
         setEmail('');
@@ -16,20 +34,14 @@ const SignIn = props => {
     }
 
     
-    const handleSubmit = async e => {
+    const handleSubmit = e => {
         e.preventDefault();
-        
-
-        try{
-
-            await auth.signInWithEmailAndPassword(email, password)
-            resetForm();
-            props.history.push('/')
-
-        } catch(err){
-            // console.log(err);
-        }
+        dispatch(signInUser({ email, password }))
+  
     }
+
+    
+
 
 
         return (

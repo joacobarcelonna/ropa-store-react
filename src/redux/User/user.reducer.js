@@ -1,7 +1,8 @@
 import userTypes from './user.types'
 
 const INITIAL_STATE ={
-    currentUser: null
+    currentUser: null,
+    signInSuccess: false
 }
 
 const userReducer = (state=INITIAL_STATE, action) => {
@@ -11,6 +12,11 @@ const userReducer = (state=INITIAL_STATE, action) => {
             ...state,
             currentUser: action.playload
         }
+        case userTypes.SIGN_IN_SUCCESS:
+            return{
+                ...state,
+                singInSuccess: action.playload
+            }
 
         default:
             return state;
