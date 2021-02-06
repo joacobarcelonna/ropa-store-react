@@ -24,6 +24,11 @@ const Header = props => {
                     {currentUser && (
                         <ul>
                             <li>
+                                <Link to="/dashboard">
+                                    Mi Cuenta
+                                </Link>
+                            </li>
+                            <li>
                                 <span onClick={() => auth.signOut()}>Cerrar Sesion</span>
                             </li>
                         </ul>

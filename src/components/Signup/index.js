@@ -1,56 +1,41 @@
-import React,{Component} from 'react'
+import React,{ useState } from 'react'
 import './styles.scss'
 import FormInput from './../forms/Button/FormInput'
 import Button from './../forms/Button'
 import {auth, handleUserProfile} from './../../firebase/utils'
+import {withRouter} from 'react-router-dom'
 
+const Signup = props => {
+    const [displayName, setDisplayName] = useState('') 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('') 
+    const [errors, setErros] = useState('') 
+    const reset = () => {
+        setDisplayName('')
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        setErros([])
 
-
-const initialState = {
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    errors: '',
-}
-
-class Signup extends Component{
-constructor(props) {
-    super(props);
-    this.state ={
-        ...initialState,
     }
 
-    this.handleChange = this.handleChange.bind(this)
-}
-
-handleChange(e) {
-    const {name, value} = e.target; 
-    this.setState({
-        [name] : value
-    });
-
-
-}
-
-handleFormSubmit = async event => {
+const handleFormSubmit = async event => {
      event.preventDefault();
-     const {displayName, email, password, confirmPassword} = this.state;
+     
 
      if (password !== confirmPassword) {
         const err = ['Contraseña no coincide'] 
-        this.setState({errors: err});
+        setErros(err)
         return;
      }
 
     try {
         const {user } =  await auth.createUserWithEmailAndPassword (email, password);
 
-        await handleUserProfile(user,{displayName})
-
-        this.setState({
-            ...initialState
-        })
+        await handleUserProfile(user,{displayName});
+        reset();
+        props.history.push('/')
 
     }catch(err) {
         // console.log(err);
@@ -59,10 +44,6 @@ handleFormSubmit = async event => {
 
 }
 
-
-    render() {
-
-        const { displayName, email, password, confirmPassword, errors } = this.state
 
         return (
             <div className="signup">
@@ -88,35 +69,35 @@ handleFormSubmit = async event => {
 
             <div className="formWrap"> 
 
-                <form onSubmit={this.handleFormSubmit}>
+                <form onSubmit={handleFormSubmit}>
                 
                 <FormInput
                 type="text"
                 name="displayName"
                 value={displayName}
                 placeholder="nombre completo"
-                onChange = {this.handleChange}
+                handleChange ={e => setDisplayName(e.target.value)}
                 />
                 <FormInput
                 type="email"
                 name="email"
                 value={email}
                 placeholder="Email"
-                onChange = {this.handleChange}
+                handleChange ={e => setEmail(e.target.value)}
                 />
                 <FormInput
                 type="password"
                 name="password"
                 value={password}
                 placeholder="Contraseña"
-                onChange = {this.handleChange}
+                handleChange ={e => setPassword(e.target.value)}
                 />
                 <FormInput
                 type="password"
                 name="confirmPassword"
                 value={confirmPassword}
                 placeholder="Confirmar Contraseña"
-                onChange = {this.handleChange}
+                handleChange ={e => setConfirmPassword(e.target.value)}
                 />
                 <Button type="submit">
                     Registrarse
@@ -129,6 +110,6 @@ handleFormSubmit = async event => {
             
         );
     }
-}
 
-export default Signup;
+
+export default withRouter(Signup);
