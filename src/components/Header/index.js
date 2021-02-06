@@ -15,7 +15,6 @@ const mapState = ({ user }) =>({
 
 
 const Header = props => {
-   
     const { currentUser } = useSelector(mapState);
 
     return (
@@ -66,7 +65,5 @@ const Header = props => {
 Header.defaultProps = {
     currentUser: null
   };
-
-
 
 export default Header;

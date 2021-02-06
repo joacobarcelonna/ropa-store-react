@@ -1,12 +1,13 @@
 import React,{ useState, useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {Link} from 'react-router-dom'
 import './styles.scss'
 import Button from './../forms/Button'
 import {singinWithGoogle} from './../../firebase/utils'
 import FormInput from './../forms/Button/FormInput'
 import {withRouter} from 'react-router-dom'
 import { signInUser } from './../../redux/User/user.actions'
-
+import AuthWrapper from './../AuthWrapper'
 
 
 const mapState = ({ user }) => ({ 
@@ -15,10 +16,10 @@ const mapState = ({ user }) => ({
 
 
 const SignIn = props => {
-    const {signInSuccess} = useSelector(mapState)
+    const {signInSuccess} = useSelector(mapState);
     const  dispatch = useDispatch();
-    const [email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         if (signInSuccess){
@@ -36,21 +37,18 @@ const SignIn = props => {
     
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(signInUser({ email, password }))
+        dispatch(signInUser({ email, password }));
   
     }
 
+    const configAuthWrapper = {
+        headline: 'Iniciar Sesion'
+    }
+
     
-
-
-
         return (
-            <div className="signin">
-            <div className='wrap'>
-                <h2>
-                    Ingresar
-                </h2>
-                <div className="formWrap">
+            <AuthWrapper {...configAuthWrapper}>
+                 <div className="formWrap">
                     <form onSubmit={handleSubmit}>
 
                         <FormInput   
@@ -58,14 +56,14 @@ const SignIn = props => {
                             name="email"    
                             value={email}
                             placeholder="Email" 
-                            handleChange = {e=>setEmail(e.target.value)}
+                            handleChange = {e => setEmail(e.target.value)}
                         />
                          <FormInput   
                             type="password"
                             name="password"    
                             value={password}
                             placeholder="Constraseña" 
-                            handleChange = {e=>setPassword(e.target.value)}
+                            handleChange = { e => setPassword(e.target.value)}
                         />
 
                         <Button type="submit" >
@@ -79,17 +77,21 @@ const SignIn = props => {
                                 </Button>
     
                             </div>
-    
-                        </div>
+                          </div>
+
+                          <div className="links">
+                              <Link to="/recovery">
+                                  Olvide mi contraseña
+                              </Link>
+
+                          </div>
                     </form>
                 </div>
-    
-            </div>
-    
-            </div>
+            </AuthWrapper>
         )
     }
     
 
 
 export default withRouter(SignIn);
+

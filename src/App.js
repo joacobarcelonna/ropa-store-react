@@ -19,6 +19,7 @@ import Registration from './pages/Registration'
 import './setup.scss'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Recovery from './pages/Recovery'
 
 
 
@@ -76,7 +77,11 @@ const App = props => {
               </MainLayouts>
             </WithAuth>
           )} />
-          
+          <Route path= "/recovery" render={() => (
+            <MainLayouts>
+              <Recovery />
+            </MainLayouts>
+          )}/>
         </Switch>
       </div>
     );

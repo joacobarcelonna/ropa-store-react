@@ -15,7 +15,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
         case userTypes.SIGN_IN_SUCCESS:
             return{
                 ...state,
-                singInSuccess: action.playload
+                signInSuccess: action.payload
             }
 
         default:

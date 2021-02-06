@@ -4,6 +4,7 @@ import FormInput from './../forms/Button/FormInput'
 import Button from './../forms/Button'
 import {auth, handleUserProfile} from './../../firebase/utils'
 import {withRouter} from 'react-router-dom'
+import AuthWrapper from './../AuthWrapper'
 
 const Signup = props => {
     const [displayName, setDisplayName] = useState('') 
@@ -44,30 +45,28 @@ const handleFormSubmit = async event => {
 
 }
 
+    const configAuthWrapper ={
+        headline: 'Registrarse'
+    }
+
 
         return (
-            <div className="signup">
-                <div className="wrap">
-                    <h2>
-                        Signup
-                    </h2>
+
+
+            <AuthWrapper {...configAuthWrapper}>
+                 <div className="formWrap"> 
 
                     {errors.length > 0 && (
-                        <ul>
-                            {errors.map((err, index) => {
-                            return (
-                                <li key={index}>
-                                {err}
-                                </li>
-                            );
-                            })}
-                        </ul>
-                        )}
-           
-
-
-
-            <div className="formWrap"> 
+                            <ul>
+                                {errors.map((err, index) => {
+                                return (
+                                    <li key={index}>
+                                    {err}
+                                    </li>
+                                );
+                                })}
+                            </ul>
+                            )}
 
                 <form onSubmit={handleFormSubmit}>
                 
@@ -105,8 +104,8 @@ const handleFormSubmit = async event => {
 
                 </form>
                 </div>
-                </div>
-            </div>
+    
+            </AuthWrapper>
             
         );
     }
