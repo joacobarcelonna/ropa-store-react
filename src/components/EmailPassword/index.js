@@ -1,102 +1,87 @@
-import React, {Component} from 'react'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { resetPasswordStart, resetUserState } from './../../redux/User/user.actions';
 import './styles.scss'
-import {withRouter} from 'react-router-dom'
+
+
 
 import AuthWrapper from './../AuthWrapper'
 import FormInput from './../forms/Button/FormInput'
 import Button from './../forms/Button'
-import { auth } from './../../firebase/utils'
 
 
-const initialState = {
-    email: '',
-    errors: [],
-};
+const mapState = ({ user }) => ({
+  resetPasswordSuccess: user.resetPasswordSuccess,
+  userErr: user.userErr
+});
 
-class EmailPassword extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            ...initialState
-        };
-        this.handleChange = this.handleChange.bind(this);
- }
+const EmailPassword = props => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { resetPasswordSuccess, userErr } = useSelector(mapState);
+  const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState([]);
 
- handleChange(e) {
-     const { name, value } = e.target;
-     this.setState({
-         [name]: value
-     })
- }
+  useEffect(() => {
+    if (resetPasswordSuccess) {
+      dispatch(resetUserState());
+      history.push('/login');
+    }
 
+  }, [resetPasswordSuccess]);
 
- handleSubmit = async (e) => {
+  useEffect(() => {
+    if (Array.isArray(userErr) && userErr.length > 0) {
+      setErrors(userErr);
+    }
+
+  }, [userErr]);
+
+  const handleSubmit = e => {
     e.preventDefault();
+    dispatch(resetPasswordStart({ email }));
+  }
 
-    try{
-        const {email} = this.state;
+  const configAuthWrapper = {
+    headline: 'Recuperar Contraseña'
+  };
 
-        const config ={
-            url: 'http://localhost:3000/login' //tengo que cambiarlo
-        }
+  return (
+    <AuthWrapper {...configAuthWrapper}>
+      <div className="formWrap">
 
-        await auth.sendPasswordResetEmail(email, config)
-        .then(() => {
-            this.props.history.push('/login');
-        })
-        .catch(() => {
-            const err = ['Email no encontrado. Prueba de nuevo']
-            this.setState({ 
-                errors: err 
-            });
-        })
+        {errors.length > 0 && (
+          <ul>
+            {errors.map((e, index) => {
+              return (
+                <li key={index}>
+                  {e}
+                </li>
+              );
+            })}
+          </ul>
+        )}
 
-    }catch(err) {
-        //console.log(err);
-    }
+        <form onSubmit={handleSubmit}>
 
- }
+          <FormInput
+            type="email"
+            name="email"
+            value={email}
+            placeholder="Email"
+            handleChange={e => setEmail(e.target.value)}
+          />
 
-    render() {
+          <Button type="submit">
+            Recuperar Contraseña
+          </Button>
 
-    const { email, errors } = this.state    
+        </form>
 
-
-    const configAuthWrapper ={
-        headline: 'Contraseña Email'
-    }
-
-        return (
-            <AuthWrapper {...configAuthWrapper}>
-                <div className="formWrap">
-                    {errors.length > 0 &&(
-                        <ul>
-                            {errors.map((e,index) => {
-                                return (
-                                    <li key={index}>
-                                        {e}
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    )}
-                    <form onSubmit={this.handleSubmit}>
-                    <FormInput 
-                     type="email"
-                     name="email"
-                     value={email}
-                     placeholder="Email" 
-                     onChange={this.handleChange}
-                    />
-
-                    <Button type="submit">
-                        Recuperar Contraseña
-                    </Button>
-                    </form>
-                </div>
-            </AuthWrapper>
-        );
-    }
+      </div>
+    </AuthWrapper>
+  );
 }
 
-export default withRouter(EmailPassword);
+export default EmailPassword;
