@@ -6,7 +6,7 @@ import { emailSignInStart, googleSignInStart } from './../../redux/User/user.act
 import './styles.scss';
 
 import AuthWrapper from './../AuthWrapper';
-import FormInput from './../forms/Button/FormInput';
+import FormInput from '../forms/FormInput';
 import Button from './../forms/Button';
 
 const mapState = ({ user }) => ({
