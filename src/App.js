@@ -82,7 +82,7 @@ const App = props => {
               <Login />
             </MainLayouts>
           )} />
-        <Route path="/recuperarcontraseña" render={() => (
+        <Route path="/recovery" render={() => (
           <MainLayouts>
             <Recovery />
           </MainLayouts>
