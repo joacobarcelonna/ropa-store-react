@@ -1,5 +1,4 @@
 
-
 export const firebaseConfig = {
     apiKey: "AIzaSyCdC3vc0lcSYrveygoelhso2020kmdI8c4",
     authDomain: "ecomerse-webcoderhouse.firebaseapp.com",
