@@ -29,6 +29,8 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Recovery from './pages/Recovery'
 import Admin from './pages/Admin'
+import ProductDetails from './pages/ProductDetails';
+
 
 const App = props => {
   const dispatch = useDispatch();
@@ -56,6 +58,11 @@ const App = props => {
         <Route path="/buscar/:filterType" render={() => (
           <MainLayouts>
             <Search />
+          </MainLayouts>
+        )} />
+        <Route path="/product/:productID" render={() => (
+          <MainLayouts>
+            <ProductDetails />
           </MainLayouts>
         )} />
         <Route path="/registrarse" render={() => (

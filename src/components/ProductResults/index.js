@@ -7,6 +7,8 @@ import './styles.scss';
 import FormSelect from './../forms/FormSelect';
 import LoadMore from './../LoadMore';
 
+
+
 const mapState = ({ productsData }) => ({
   products: productsData.products
 });
@@ -86,9 +88,7 @@ const ProductResults = ({ }) => {
             typeof productPrice === 'undefined') return null;
 
           const configProduct = {
-            productThumbnail,
-            productName,
-            productPrice
+            ...product
           };
 
           return (
