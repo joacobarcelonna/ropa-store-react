@@ -43,7 +43,7 @@ const SignIn = props => {
   }
 
   const configAuthWrapper = {
-    headline: 'Ingresar'
+    headline: 'Login'
   };
 
   return (
