@@ -27,7 +27,23 @@ const mapState = ({ user }) => ({
               <img src={Logo} alt="Osmo Logo" />
             </Link>
           </div>
-  
+          
+          <nav>
+          <ul>
+            <li>
+              <Link to="/">
+                Inicio
+              </Link>
+            </li>
+            <li>
+              <Link to="/buscar">
+                Buscar
+              </Link>
+            </li>
+          </ul>
+        
+        
+        </nav>
           <div className="callToActions">
   
             {currentUser && (
