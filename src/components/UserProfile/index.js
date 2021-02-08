@@ -7,11 +7,12 @@ const UserProfile = props => {
   const { displayName } = currentUser;
 
   return (
+    
     <div className="userProfile">
       <ul>
         <li>
           <div className="img">
-            <img src={userIMG} />
+            <img src={userIMG} alt="foto" />
           </div>
         </li>
         <li>

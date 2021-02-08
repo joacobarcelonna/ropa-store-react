@@ -69,7 +69,7 @@ const Header = props => {
 
             {!currentUser && [
               <li key={1}>
-                <Link to="/registration">
+                <Link to="/registrarse">
                   Registrarse
                 </Link>
               </li>,
