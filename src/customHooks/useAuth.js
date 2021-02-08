@@ -13,7 +13,7 @@ const useAuth = props =>{
     useEffect(() => {
         if(!currentUser){
         history.push('/login')
-        }
+        } // eslint-disable-next-line
     },[currentUser])
 
     return currentUser;

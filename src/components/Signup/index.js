@@ -28,7 +28,7 @@ const Signup = props => {
       reset();
       history.push('/');
     }
-
+    // eslint-disable-next-line
   }, [currentUser]);
 
   useEffect(() => {

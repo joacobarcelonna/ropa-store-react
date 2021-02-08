@@ -9,7 +9,7 @@ import './styles.scss';
 const mapState = state => ({
   product: state.productsData.product
 });
-
+// eslint-disable-next-line
 const ProductCard = ({}) => {
   const dispatch = useDispatch();
   const { productID } = useParams();
@@ -32,7 +32,7 @@ const ProductCard = ({}) => {
         setProduct({})
       )
     }
-
+    // eslint-disable-next-line
   }, []);
 
   const handleAddToCart = (product) => {
@@ -49,7 +49,7 @@ const ProductCard = ({}) => {
   return (
     <div className="productCard">
       <div className="hero">
-        <img src={productThumbnail} />
+        <img alt="Thumbnail" src={productThumbnail} />
       </div>
       <div className="productDetails">
         <ul>

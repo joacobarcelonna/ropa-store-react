@@ -21,6 +21,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 
 
 //pages
+import Cart from './pages/Cart';
 import Search from './pages/Search';
 import Homepage from './pages/Homepage'
 import Registration from './pages/Registration'
@@ -37,7 +38,7 @@ const App = props => {
 
   useEffect(() => {
     dispatch(checkUserSession());
-
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -63,6 +64,11 @@ const App = props => {
         <Route path="/product/:productID" render={() => (
           <MainLayouts>
             <ProductDetails />
+          </MainLayouts>
+        )} />
+        <Route path="/cart" render={() => (
+          <MainLayouts>
+            <Cart />
           </MainLayouts>
         )} />
         <Route path="/registrarse" render={() => (
@@ -95,7 +101,7 @@ const App = props => {
             </AdminLayout>
           </WithAdminAuth>
         )} />
-        )} />
+        
       </Switch>
     </div>
   );

@@ -25,7 +25,7 @@ const SignIn = props => {
       resetForm();
       history.push('/');
     }
-
+    // eslint-disable-next-line
   }, [currentUser]);
 
   const resetForm = () => {

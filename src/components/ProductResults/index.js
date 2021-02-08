@@ -12,8 +12,8 @@ import LoadMore from './../LoadMore';
 const mapState = ({ productsData }) => ({
   products: productsData.products
 });
-
-const ProductResults = ({ }) => {
+// eslint-disable-next-line
+const ProductResults = ({ }) => { 
   const dispatch = useDispatch();
   const history = useHistory();
   const { filterType } = useParams();
@@ -24,7 +24,7 @@ const ProductResults = ({ }) => {
   useEffect(() => {
     dispatch(
       fetchProductsStart({ filterType })
-    )
+    ); // eslint-disable-next-line
   }, [filterType]);
 
   const handleFilter = (e) => {
@@ -92,7 +92,7 @@ const ProductResults = ({ }) => {
           };
 
           return (
-            <Product {...configProduct} />
+            <Product key={pos} {...configProduct} />
           );
         })}
       </div>

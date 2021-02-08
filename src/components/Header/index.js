@@ -49,18 +49,18 @@ const Header = props => {
           <ul>
 
             <li>
-              <Link>
+              <Link to="/cart">
                 Carrito ({totalNumCartItems})
               </Link>
             </li>
 
             {currentUser && [
-              <li>
+              <li key={1} > 
                 <Link to="/dashboard">
                   Mi cuenta
                 </Link>
               </li>,
-              <li>
+              <li key={2}>
                 <span onClick={() => signOut()}>
                   Cerrar Sesion
                 </span>
@@ -68,12 +68,12 @@ const Header = props => {
             ]}
 
             {!currentUser && [
-              <li>
+              <li key={1}>
                 <Link to="/registration">
                   Registrarse
                 </Link>
               </li>,
-              <li>
+              <li key={2}>
                 <Link to="/login">
                   Ingresar
                 </Link>

@@ -29,7 +29,7 @@ const Admin = props => {
   useEffect(() => {
     dispatch(
       fetchProductsStart()
-    );
+    );// eslint-disable-next-line
   }, []);
 
   const toggleModal = () => setHideModal(!hideModal);
@@ -172,9 +172,10 @@ const Admin = props => {
                       } = product;
 
                       return (
+                        
                         <tr key={index}>
-                          <td>
-                            <img className="thumb" src={productThumbnail} />
+                          <td> 
+                            <img alt="Thumbnail"className="thumb" src={productThumbnail} />
                           </td>
                           <td>
                             {productName}
