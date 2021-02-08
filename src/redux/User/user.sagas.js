@@ -73,7 +73,7 @@ export function* signUpUser({ payload: {
 } }) {
 
   if (password !== confirmPassword) {
-    const err = ['Password Don\'t match'];
+    const err = ['contraseñas no coinciden'];
     yield put(
       userError(err)
     );
