@@ -12,5 +12,5 @@ app.get("*", (req, res) => {
       .status(404)
       .send("404, Not Found.");
 });
-
+/* eslint-disable eol-last */
 exports.api = functions.https.onRequest(app);
