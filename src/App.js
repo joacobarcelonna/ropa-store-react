@@ -50,12 +50,12 @@ const App = props => {
           </HomepageLayout>
         )}
         />
-        <Route exact path="/buscar" render={() => (
+        <Route exact path="/search" render={() => (
           <MainLayouts>
             <Search />
           </MainLayouts>
         )} />
-        <Route path="/buscar/:filterType" render={() => (
+        <Route path="/search/:filterType" render={() => (
           <MainLayouts>
             <Search />
           </MainLayouts>

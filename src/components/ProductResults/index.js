@@ -29,7 +29,7 @@ const ProductResults = ({ }) => {
 
   const handleFilter = (e) => {
     const nextFilter = e.target.value;
-    history.push(`/buscar/${nextFilter}`);
+    history.push(`/search/${nextFilter}`);
   };
 
   if (!Array.isArray(data)) return null;
