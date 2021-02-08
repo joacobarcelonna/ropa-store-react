@@ -37,7 +37,7 @@ const mapState = ({ user }) => ({
             </li>
             <li>
               <Link to="/buscar">
-                Buscar
+                Catálogo
               </Link>
             </li>
           </ul>

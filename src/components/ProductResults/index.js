@@ -5,7 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Product from './Product';
 import './styles.scss';
 import FormSelect from './../forms/FormSelect';
-
+import LoadMore from './../LoadMore';
 
 const mapState = ({ productsData }) => ({
   products: productsData.products
@@ -16,6 +16,8 @@ const ProductResults = ({ }) => {
   const history = useHistory();
   const { filterType } = useParams();
   const { products } = useSelector(mapState);
+
+  const { data, queryDoc, isLastPage } = products;
 
   useEffect(() => {
     dispatch(
@@ -28,12 +30,12 @@ const ProductResults = ({ }) => {
     history.push(`/buscar/${nextFilter}`);
   };
 
-  if (!Array.isArray(products)) return null;
-  if (products.length < 1) {
+  if (!Array.isArray(data)) return null;
+  if (data.length < 1) {
     return (
       <div className="products">
         <p>
-          No hubo resultados.
+          No se encontro el resultado.
         </p>
       </div>
     );
@@ -54,18 +56,31 @@ const ProductResults = ({ }) => {
     handleChange: handleFilter
   };
 
+  const handleLoadMore = () => {
+    dispatch(
+      fetchProductsStart({
+        filterType,
+        startAfterDoc: queryDoc,
+        persistProducts: data
+      })
+    )
+  };
+
+  const configLoadMore = {
+    onLoadMoreEvt: handleLoadMore,
+  };
 
   return (
     <div className="products">
 
       <h1>
-        Buscar productos
+        Buscar producto
       </h1>
 
       <FormSelect {...configFilters} />
 
       <div className="productResults">
-        {products.map((product, pos) => {
+        {data.map((product, pos) => {
           const { productThumbnail, productName, productPrice } = product;
           if (!productThumbnail || !productName ||
             typeof productPrice === 'undefined') return null;
@@ -81,6 +96,11 @@ const ProductResults = ({ }) => {
           );
         })}
       </div>
+
+      {!isLastPage && (
+        <LoadMore {...configLoadMore} />
+      )}
+
     </div>
   );
 };
